@@ -9,6 +9,7 @@ mod recipes;
 mod engine;
 mod storage;
 mod source_fix;
+mod sre;
 #[cfg(feature="desktop")]
 mod desktop;
 #[cfg(feature="desktop")]

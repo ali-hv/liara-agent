@@ -1,4 +1,4 @@
-use crate::{models::*,agent,engine,liara::{self,Liara},planner,project,security::*,store::Store};
+use crate::{models::*,agent,engine,liara::{self,Liara},planner,project,security::*,store::Store,sre};
 use serde_json::{json,Value};
 use std::{collections::BTreeMap,sync::{Arc,Mutex,atomic::AtomicBool}};
 use tauri::{Emitter,Manager,State};
@@ -6,9 +6,9 @@ use tauri::{Emitter,Manager,State};
 struct Approved{request:ApprovalRequest,plan:DeploymentPlan,secrets:Secrets,resume:Option<String>,retry_releases:Vec<String>,resume_version:Option<(String,String)>} 
 #[derive(Clone)]
 struct Recovery{run_id:String,revision:String,updated_at:String}
-struct PendingFix{review:crate::source_fix::FixReview,account_id:String,project:ProjectAnalysis}
+struct PendingFix{sre_origin:Option<(String,String)>,review:crate::source_fix::FixReview,account_id:String,project:ProjectAnalysis}
 struct Session{recoveries:BTreeMap<String,Recovery>,fixes:BTreeMap<String,PendingFix>,api:Option<Liara>,account:Option<Account>,approvals:BTreeMap<String,Approved>,active:BTreeMap<String,Arc<AtomicBool>>,domain_approvals:BTreeMap<String,Value>,run_secrets:BTreeMap<String,Secrets>,plan_envs:BTreeMap<String,Secrets>}
-struct AppState{store:Arc<Store>,session:Mutex<Session>}
+struct AppState{store:Arc<Store>,sre:Arc<sre::Supervisor>,session:Mutex<Session>}
 impl AppState {
  fn connected(&self)->Result<(Liara,Account)>{let s=self.session.lock().map_err(|_|"Session unavailable")?;Ok((s.api.clone().ok_or("Connect your Liara account first.")?,s.account.clone().ok_or("Connect your account first.")?))}
 }
@@ -22,10 +22,12 @@ fn open_external(url:String)->Result<()>{
 }
 #[tauri::command]
 async fn connect_account(token:String,team_id:Option<String>,remember:bool,state:State<'_,AppState>)->Result<Account>{
+ if state.sre.active(){return Err("Stop SRE monitoring and corrective actions before switching accounts.".into());}
  if token.trim().is_empty(){return Err("Enter your Liara API token.".into());}
  {let s=state.session.lock().map_err(|_|"Session unavailable")?;if !s.active.is_empty(){return Err("Stop the active deployment before switching accounts.".into());}}
  let team_id=team_id.map(|id|id.trim().to_string()).filter(|id|!id.is_empty());
  let api=Liara::new(token.trim().into(),team_id.clone())?;let mut account=api.account("session").await?;
+ let mut s=state.session.lock().map_err(|_|"Session unavailable")?;if state.sre.active()||!s.active.is_empty(){return Err("Stop monitoring and deployments before switching accounts.".into());}
  if remember {
   let token_saved=keyring::Entry::new("ir.liara.launch.desktop","liara-token").and_then(|entry|entry.set_password(token.trim())).is_ok();
   let team_saved=match team_id.as_deref(){Some(team)=>keyring::Entry::new("ir.liara.launch.desktop","liara-team-id").and_then(|entry|entry.set_password(team)).is_ok(),None=>delete_saved_credential("liara-team-id").is_ok()};
@@ -33,7 +35,7 @@ async fn connect_account(token:String,team_id:Option<String>,remember:bool,state
   else{let _=delete_saved_credential("liara-token");account.warnings.push("System keyring is unavailable; the token and team context are stored in memory for this session only.".into());}
  }
  else{delete_saved_credential("liara-token")?;delete_saved_credential("liara-team-id")?;}
- let mut s=state.session.lock().map_err(|_|"Session unavailable")?;s.recoveries.clear();s.fixes.clear();s.api=Some(api);s.account=Some(account.clone());s.approvals.clear();s.run_secrets.clear();s.plan_envs.clear();Ok(account)
+ s.recoveries.clear();s.fixes.clear();s.api=Some(api);s.account=Some(account.clone());s.approvals.clear();s.run_secrets.clear();s.plan_envs.clear();Ok(account)
 }
 #[tauri::command]
 async fn restore_account(state:State<'_,AppState>)->Result<Option<Account>>{
@@ -41,10 +43,11 @@ async fn restore_account(state:State<'_,AppState>)->Result<Option<Account>>{
  if let Some(token)=token{let team_id=keyring::Entry::new("ir.liara.launch.desktop","liara-team-id").and_then(|e|e.get_password()).ok();connect_account(token,team_id,true,state).await.map(Some)}else{Ok(None)}
 }
 #[tauri::command]
-async fn refresh_account(state:State<'_,AppState>)->Result<Account>{let (api,old)=state.connected()?;let account=api.account(&old.credential_storage).await?;state.session.lock().map_err(|_|"Session unavailable")?.account=Some(account.clone());Ok(account)}
+async fn refresh_account(state:State<'_,AppState>)->Result<Account>{let (api,old)=state.connected()?;let account=api.account(&old.credential_storage).await?;let mut session=state.session.lock().map_err(|_|"Session unavailable")?;if session.account.as_ref().map(|a|&a.id)!=Some(&old.id){return Err("Account changed during refresh. Refresh the current account again.".into());}session.account=Some(account.clone());Ok(account)}
 #[tauri::command]
 fn disconnect_account(state:State<AppState>)->Result<()>{
- let mut s=state.session.lock().map_err(|_|"Session unavailable")?;if !s.active.is_empty(){return Err("Stop the active deployment before disconnecting.".into());}
+ if state.sre.active(){return Err("Stop SRE monitoring before disconnecting your account.".into());}
+ let mut s=state.session.lock().map_err(|_|"Session unavailable")?;if state.sre.active()||!s.active.is_empty(){return Err("Stop monitoring and deployments before disconnecting.".into());}
  delete_saved_credential("liara-token")?;delete_saved_credential("liara-team-id")?;
  s.recoveries.clear();s.fixes.clear();s.run_secrets.clear();s.plan_envs.clear();s.api=None;s.account=None;s.approvals.clear();s.domain_approvals.clear();Ok(())
 }
@@ -123,7 +126,7 @@ async fn propose_project_fix(plan_id:String,run_id:Option<String>,language:Strin
  let review=crate::source_fix::review(std::path::Path::new(&project.path),&plan,advice)?;
  let mut session=state.session.lock().map_err(|_|"Session unavailable")?;
  if session.account.as_ref().map(|a|&a.id)!=Some(&account.id){return Err("Account changed. Review the project fix again.".into());}
- session.fixes.clear();session.fixes.insert(review.id.clone(),PendingFix{review:review.clone(),account_id:account.id,project});Ok(review)
+ session.fixes.clear();session.fixes.insert(review.id.clone(),PendingFix{sre_origin:None,review:review.clone(),account_id:account.id,project});Ok(review)
 }
 #[tauri::command]
 fn apply_project_fix(approval_id:String,revision:String,state:State<AppState>)->Result<ProjectAnalysis>{
@@ -132,6 +135,9 @@ fn apply_project_fix(approval_id:String,revision:String,state:State<AppState>)->
  let pending=session.fixes.remove(&approval_id).ok_or("Project fix approval is missing or already used.")?;
  let account=session.account.as_ref().ok_or("Connect your account first.")?;
  let plan:DeploymentPlan=state.store.get("plan",&pending.review.plan_id)?;
+ if state.sre.action_active.load(std::sync::atomic::Ordering::SeqCst){return Err("Wait for the corrective action before changing project files.".into());}
+ if let Some((monitor_id,incident_id))=&pending.sre_origin{let monitor=state.sre.get(monitor_id,&account.id)?;if !monitor.incidents.iter().any(|i|i.id==*incident_id&&i.closed_at.is_none()){return Err("The incident resolved or changed. Request a fresh project diff.".into());}}
+
  if pending.account_id!=account.id||pending.review.revision!=revision||plan.revision!=revision||planner::revision(&plan)!=revision{return Err("Project fix does not match the reviewed plan or account.".into());}
  crate::source_fix::apply(std::path::Path::new(&pending.project.path),&pending.review,&state.store.data_dir.join("project-backups"))?;
  session.approvals.clear();session.fixes.clear();
@@ -237,7 +243,7 @@ async fn request_approval(plan_id:String,mut secrets:Secrets,resume_id:Option<St
 #[tauri::command]
 async fn start_deployment(approval_id:String,revision:String,app:tauri::AppHandle,state:State<'_,AppState>)->Result<DeploymentRun>{
  let (api,account)=state.connected()?;
- let approved={let mut s=state.session.lock().map_err(|_|"Session unavailable")?;if !s.active.is_empty(){return Err("A deployment is already running.".into());}s.approvals.remove(&approval_id).ok_or("Approval is missing or already used.")?};
+ let approved={let mut s=state.session.lock().map_err(|_|"Session unavailable")?;if !s.active.is_empty()||state.sre.action_active.load(std::sync::atomic::Ordering::SeqCst){return Err("A deployment or corrective action is already running.".into());}s.approvals.remove(&approval_id).ok_or("Approval is missing or already used.")?};
  if approved.request.revision!=revision||approved.plan.revision!=planner::revision(&approved.plan){return Err("Approval does not match this plan revision.".into());}
  if approved.plan.account_id!=account.id||approved.request.expires_at<now(){return Err("Approval expired or account changed. Review the plan again.".into());}
  let mut run=if let Some(ref id)=approved.resume {state.store.get::<DeploymentRun>("run",id)?}else{DeploymentRun{id:id(),plan:approved.plan.clone(),status:"running".into(),started_at:now(),updated_at:now(),network_id:None,network_pending:false,resources:approved.plan.services.iter().map(|s|ResourceProgress{service_id:s.id.clone(),phase:"pending".into(),..Default::default()}).collect(),events:vec![]}};
@@ -245,11 +251,10 @@ async fn start_deployment(approval_id:String,revision:String,app:tauri::AppHandl
  run.plan=approved.plan.clone();
  for service_id in &approved.retry_releases{engine::verify_release_retry(&api,&run,service_id).await?;}
  for resource in &mut run.resources{if approved.retry_releases.contains(&resource.service_id){resource.request_pending=None;}}
- run.status="running".into();state.store.save("run",&run.id,&account.id,&run)?;
- state.session.lock().map_err(|_|"Session unavailable")?.run_secrets.insert(run.id.clone(),approved.secrets.clone());
- let stop=Arc::new(AtomicBool::new(false));state.session.lock().map_err(|_|"Session unavailable")?.active.insert(run.id.clone(),stop.clone());
+ run.status="running".into();let stop=Arc::new(AtomicBool::new(false));
+ {let mut session=state.session.lock().map_err(|_|"Session unavailable")?;if session.account.as_ref().map(|a|&a.id)!=Some(&account.id)||!session.active.is_empty()||state.sre.action_active.load(std::sync::atomic::Ordering::SeqCst){return Err("Account changed or another operation started; review again.".into());}state.store.save("run",&run.id,&account.id,&run)?;session.run_secrets.insert(run.id.clone(),approved.secrets.clone());session.active.insert(run.id.clone(),stop.clone());}
  let emit_app=app.clone();let store=state.store.clone();let mut redactions=vec![api.secret()];redactions.extend(approved.secrets.values().flat_map(|m|m.values().cloned()));
- let executor=engine::Executor{api,store,notify:Arc::new(move|r|{let _=emit_app.emit("deployment:update",r);}),stop,secrets:approved.secrets,redactions};
+ let sre=state.sre.clone();let executor=engine::Executor{api,store,notify:Arc::new(move|r|{sre.associate_run(r);let _=emit_app.emit("deployment:update",r);}),stop,secrets:approved.secrets,redactions};
  let to_run=run.clone();let run_id=run.id.clone();
  tauri::async_runtime::spawn(async move {executor.execute(to_run).await;let state=app.state::<AppState>();if let Ok(mut s)=state.session.lock(){s.active.remove(&run_id);};});
  Ok(run)
@@ -315,10 +320,60 @@ async fn apply_domain(approval_id:String,state:State<'_,AppState>)->Result<Value
  let result=json!({"domain":domain,"domainId":id,"target":target,"status":status,"instructions":dns_message,"tls":tls});
  state.store.save("domain",&id,&account.id,&result)?;Ok(result)
 }
+#[tauri::command]
+async fn sre_targets(state:State<'_,AppState>)->Result<Vec<sre::Target>>{let(api,account)=state.connected()?;sre::targets(&api,&state.store,&account.id).await}
+#[tauri::command]
+fn sre_monitors(state:State<AppState>)->Result<Vec<sre::Monitor>>{let(_,account)=state.connected()?;state.sre.list(&account.id)}
+#[tauri::command]
+async fn sre_start(target_id:String,settings:sre::Settings,language:String,state:State<'_,AppState>)->Result<sre::Monitor>{let(api,account)=state.connected()?;let targets=sre::targets(&api,&state.store,&account.id).await?;let target=targets.into_iter().find(|t|t.id==target_id).ok_or("Select an available Liara project first.")?;let session=state.session.lock().map_err(|_|"Session unavailable")?;if session.account.as_ref().map(|a|&a.id)!=Some(&account.id){return Err("Account changed. Select the project again.".into());}state.sre.start(api,&account.id,target,settings,language)}
+#[tauri::command]
+fn sre_stop(monitor_id:String,state:State<AppState>)->Result<sre::Monitor>{let(_,account)=state.connected()?;if state.sre.action_active.load(std::sync::atomic::Ordering::SeqCst){return Err("A corrective action is being verified. Wait for it to finish before stopping.".into());}state.sre.stop(&monitor_id,&account.id)}
+#[tauri::command]
+fn sre_check(monitor_id:String,state:State<AppState>)->Result<sre::Monitor>{let(_,account)=state.connected()?;state.sre.check_now(&monitor_id,&account.id)}
+#[tauri::command]
+fn sre_analyze(monitor_id:String,state:State<AppState>)->Result<sre::Monitor>{let(api,account)=state.connected()?;state.sre.analyze(api,&monitor_id,&account.id)}
+#[tauri::command]
+async fn sre_chat(monitor_id:String,messages:Vec<ChatMessage>,language:String,state:State<'_,AppState>)->Result<String>{let(_,account)=state.connected()?;let monitor=state.sre.get(&monitor_id,&account.id)?;agent::chat_sre(&monitor,&messages,&language).await}
+#[tauri::command]
+async fn sre_prepare_action(monitor_id:String,service_id:String,kind:String,state:State<'_,AppState>)->Result<sre::Approval>{let(api,account)=state.connected()?;sre::prepare_action(&api,&state.sre,&account,&monitor_id,&service_id,&kind).await}
+struct SreActionGuard(Arc<sre::Supervisor>);
+impl Drop for SreActionGuard{fn drop(&mut self){self.0.action_active.store(false,std::sync::atomic::Ordering::SeqCst);}}
+#[tauri::command]
+async fn sre_apply_action(approval_id:String,state:State<'_,AppState>)->Result<sre::Monitor>{
+ let(api,account)=state.connected()?;
+ {let session=state.session.lock().map_err(|_|"Session unavailable")?;if session.account.as_ref().map(|a|&a.id)!=Some(&account.id)||!session.active.is_empty()||state.sre.action_active.swap(true,std::sync::atomic::Ordering::SeqCst){return Err("Another deployment or corrective action is active. Wait before continuing.".into());}}
+ let _guard=SreActionGuard(state.sre.clone());let approval=state.sre.consume_approval(&approval_id,&account.id)?;sre::apply_action(&api,&state.sre,approval).await
+}
+#[tauri::command]
+async fn sre_reconcile_action(monitor_id:String,action_id:String,state:State<'_,AppState>)->Result<sre::Monitor>{let(api,account)=state.connected()?;sre::reconcile_action(&api,&state.sre,&account.id,&monitor_id,&action_id).await}
+#[tauri::command]
+fn sre_acknowledge_action(monitor_id:String,action_id:String,state:State<AppState>)->Result<sre::Monitor>{let(_,account)=state.connected()?;sre::acknowledge_action(&state.sre,&account.id,&monitor_id,&action_id)}
+#[tauri::command]
+async fn sre_prepare_code_fix(monitor_id:String,state:State<'_,AppState>)->Result<crate::source_fix::FixReview>{
+ let(_,account)=state.connected()?;let monitor=state.sre.get(&monitor_id,&account.id)?;let incident=monitor.incidents.iter().rev().find(|i|i.closed_at.is_none()).ok_or("No open incident needs a code review.")?;
+ let run_id=monitor.target.run_id.as_deref().ok_or_else(||sre::tr(&monitor.language,"This cloud app has no associated local source. Select its folder in Projects and prepare a deployment to enable reviewed code fixes.","این برنامه ابری به کد محلی متصل نیست. پوشه آن را در بخش پروژه‌ها انتخاب و استقرار را آماده کنید تا اصلاح کد با بررسی تغییرات فعال شود."))?;
+ let mut run:DeploymentRun=state.store.get("run",run_id)?;if run.plan.account_id!=account.id{return Err("Deployment belongs to another account.".into());}
+ let project:ProjectAnalysis=state.store.get("project",&run.plan.project_id)?;
+ {let session=state.session.lock().map_err(|_|"Session unavailable")?;if !session.active.is_empty()||state.sre.action_active.load(std::sync::atomic::Ordering::SeqCst){return Err("Wait for active deployments or corrective actions before reviewing source files.".into());}}
+ run.status="failed".into();run.events.clear();for signal in &incident.signals{run.events.push(RunEvent{at:now(),level:"error".into(),service_id:Some(signal.service_id.clone()),message:signal.message.clone()});}
+ if let Some(sample)=monitor.samples.last(){for observation in &sample.observations{for log in &observation.logs{run.events.push(RunEvent{at:log.at.clone(),level:"log".into(),service_id:Some(observation.service_id.clone()),message:log.message.clone()});}}}
+ let advice=agent::propose_source_fix(&project,&run.plan,Some(&run),&monitor.language).await?;let review=crate::source_fix::review(std::path::Path::new(&project.path),&run.plan,advice)?;
+ let mut session=state.session.lock().map_err(|_|"Session unavailable")?;if session.account.as_ref().map(|a|&a.id)!=Some(&account.id){return Err("Account changed. Request a new code review.".into());}
+ session.fixes.clear();session.fixes.insert(review.id.clone(),PendingFix{sre_origin:Some((monitor.id,incident.id.clone())),review:review.clone(),account_id:account.id,project});Ok(review)
+}
+#[tauri::command]
+async fn sre_prepare_redeploy(monitor_id:String,state:State<'_,AppState>)->Result<DeploymentPlan>{
+ let(_,account)=state.connected()?;let monitor=state.sre.get(&monitor_id,&account.id)?;let run:DeploymentRun=state.store.get("run",monitor.target.run_id.as_deref().ok_or("Associate a local project before redeploying.")?)?;
+ if run.plan.account_id!=account.id{return Err("Deployment belongs to another account.".into());}
+ let choices=PlanChoices{guided:true,network:run.network_id.or(run.plan.network.clone()),services:run.plan.services.iter().map(|s|(s.id.clone(),ServiceChoice{name:Some(s.name.clone()),plan_id:Some(s.plan_id.clone()),bundle_id:Some(s.bundle_id.clone()),existing_id:run.resources.iter().find(|r|r.service_id==s.id).and_then(|r|r.resource_id.clone()),port:Some(s.port),version:s.version.clone(),bindings:s.bindings.clone(),volumes:s.volumes.iter().map(|v|(v.id.clone(),VolumeChoice{resolution:v.resolution.clone(),disk_name:v.disk_name.clone(),size_gb:v.size_gb})).collect(),..Default::default()})).collect(),..Default::default()};
+ prepare_plan(run.plan.project_id,choices,monitor.language,state).await
+}
+
 pub fn run(){
  if cfg!(debug_assertions){let _=dotenvy::from_path(concat!(env!("CARGO_MANIFEST_DIR"),"/../.env"));}
  tauri::Builder::default().plugin(tauri_plugin_dialog::init()).plugin(tauri_plugin_opener::init()).setup(|app|{
    let dir=app.path().app_data_dir()?;let store=Arc::new(Store::new(&dir).map_err(std::io::Error::other)?);
-   app.manage(AppState{store,session:Mutex::new(Session{recoveries:BTreeMap::new(),fixes:BTreeMap::new(),api:None,account:None,approvals:BTreeMap::new(),active:BTreeMap::new(),domain_approvals:BTreeMap::new(),run_secrets:BTreeMap::new(),plan_envs:BTreeMap::new()})});Ok(())
- }).invoke_handler(tauri::generate_handler![app_status,open_external,connect_account,restore_account,refresh_account,disconnect_account,scan_project,list_projects,remove_recent_project,delete_deployment,planning_questions,prepare_plan,propose_project_fix,apply_project_fix,plan_environment,prepare_storage_recovery,request_approval,start_deployment,stop_deployment,list_runs,chat_agent,prepare_domain,apply_domain]).run(tauri::generate_context!()).expect("Unable to launch Liara desktop application");
+   let handle=app.handle().clone();let sre=Arc::new(sre::Supervisor::new(store.clone(),Arc::new(move|monitor|{let _=handle.emit("sre:update",monitor);})));
+   app.manage(AppState{store,sre,session:Mutex::new(Session{recoveries:BTreeMap::new(),fixes:BTreeMap::new(),api:None,account:None,approvals:BTreeMap::new(),active:BTreeMap::new(),domain_approvals:BTreeMap::new(),run_secrets:BTreeMap::new(),plan_envs:BTreeMap::new()})});Ok(())
+ }).invoke_handler(tauri::generate_handler![sre_targets,sre_monitors,sre_start,sre_stop,sre_check,sre_analyze,sre_chat,sre_prepare_action,sre_apply_action,sre_reconcile_action,sre_acknowledge_action,sre_prepare_code_fix,sre_prepare_redeploy,app_status,open_external,connect_account,restore_account,refresh_account,disconnect_account,scan_project,list_projects,remove_recent_project,delete_deployment,planning_questions,prepare_plan,propose_project_fix,apply_project_fix,plan_environment,prepare_storage_recovery,request_approval,start_deployment,stop_deployment,list_runs,chat_agent,prepare_domain,apply_domain]).run(tauri::generate_context!()).expect("Unable to launch Liara desktop application");
 }

@@ -1,6 +1,6 @@
 # Liara Launch
 
-Liara Launch is a Linux desktop deployment assistant built with Tauri 2, React, TypeScript, and Rust. It scans a local project, combines deterministic findings with an optional OpenAI compatible agent, presents a deployment plan for review, and can deploy supported services through Liara APIs. It supports English and Persian (RTL with Yekan Bakh), keeps credentials in Linux Secret Service when available, and records resumable runs in SQLite.
+Liara Launch is a Linux desktop deployment assistant built with Tauri 2, React, TypeScript, and Rust. It scans a local project, combines deterministic findings with an optional OpenAI compatible agent, presents a deployment plan for review, and can deploy supported services through Liara APIs. It supports English and Persian (RTL with Yekan Bakh), keeps credentials in Linux Secret Service when available, and records resumable runs in SQLite. The on-demand reliability assistant checks deployed projects, investigates incidents, and offers corrective actions with explicit approval.
 
 ## Requirements
 
@@ -51,10 +51,14 @@ Catalog entries describe documented contracts, not proof that every operation is
 
 ## Current scope
 
-The app focuses on local-folder PaaS deployments and managed dependencies. The API inventory also covers databases, object storage, DNS, domains/TLS, mail, VPS, file management, billing, and AI APIs; inventory coverage does not mean those capabilities have a UI. VPS provisioning, mail administration, registrar purchases, background SRE monitoring, and `.deb` packaging are outside this phase. Docker Compose informs analysis and is not deployed as a Compose runtime. Remote builds are used where supported; model generated local shell commands are not executed.
+The app focuses on local-folder PaaS deployments and managed dependencies. The API inventory also covers databases, object storage, DNS, domains/TLS, mail, VPS, file management, billing, and AI APIs; inventory coverage does not mean those capabilities have a UI. VPS provisioning, mail administration, registrar purchases, unattended 24-hour monitoring, and `.deb` packaging are outside this phase. Docker Compose informs analysis and is not deployed as a Compose runtime. Remote builds are used where supported; model generated local shell commands are not executed.
 
-The frontend test suite uses mock APIs. A real Liara deployment has not been run in this workspace, so live account access, account specific quota, costs, and release behavior remain unverified here.
+The frontend test suite uses mock APIs. The two-service sample was deployed during earlier deployment validation; see [client compatibility verification](docs/release-client-compatibility.md). SRE implementation checked its public health endpoints, but authenticated monitoring and live corrective actions still need validation with credentials supplied through the app.
 
 The deployment assistant now asks project-specific workload questions before planning. The default review shows the recommendation and cost with a deploy button. Choose **تغییر تنظیمات استقرار** / **Change deployment settings** to inspect or edit the proposed resources. See [guided planning](docs/guided-planning.md) for behavior, validation and limitations.
 
 Use the trash icons beside recent projects or deployment history to remove local entries. Recent-project removal preserves the metadata needed by existing deployment history; selecting the folder again restores it to recents. History deletion removes that run's resume record and session credentials. Running deployments must be stopped first. These actions never delete project files or Liara cloud resources; cloud resources can continue to incur charges.
+
+## Reliability assistant (SRE)
+
+Choose **دستیار سلامت سرویس / Reliability assistant** in the sidebar, select a project, and click **شروع بررسی / Start checks**. It checks health, CPU/RAM and recent logs, explains incidents, and offers restart, compatible resource upgrades, or reviewed code fixes. Every cloud change requires separate approval and its outcome is checked. Checks stop when the app closes; no background service is installed. See [SRE behavior, API limitations, tests and demo](docs/sre.md).
