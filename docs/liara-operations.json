@@ -1,0 +1,4627 @@
+[
+  {
+    "service": "Liara Account API",
+    "method": "GET",
+    "path": "/v1/me/subscription",
+    "summary": "Get current subscription plan",
+    "inputs": "No inputs specified",
+    "outputs": "200: currentSubscriptionPlan; 401 (schema unspecified)",
+    "authentication": [
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/me.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Account API",
+    "method": "GET",
+    "path": "/v1/me",
+    "summary": "Get current user and console information",
+    "inputs": "No inputs specified",
+    "outputs": "200: user, team, databaseVersions, defaultDatabaseVersions, featureFlags, plans; 401 (schema unspecified)",
+    "authentication": [
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/me.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Account API",
+    "method": "GET",
+    "path": "/v1/me/git-integrations",
+    "summary": "Get Git integrations",
+    "inputs": "No inputs specified",
+    "outputs": "200: gitProviderIntegrations, gitRepositoryIntegrations; 401 (schema unspecified)",
+    "authentication": [
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/me.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Account API",
+    "method": "GET",
+    "path": "/v1/me/free-credit",
+    "summary": "Get remaining free credit",
+    "inputs": "No inputs specified",
+    "outputs": "200: remainingFreeCredit; 401 (schema unspecified)",
+    "authentication": [
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/me.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Account API",
+    "method": "GET",
+    "path": "/v1/me/two-fa",
+    "summary": "Get two-factor authentication status",
+    "inputs": "No inputs specified",
+    "outputs": "200: twoFA, lastTwoFAVerifiedAt; 401 (schema unspecified)",
+    "authentication": [
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/me.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Account API",
+    "method": "GET",
+    "path": "/v1/me/utm",
+    "summary": "Get UTM information",
+    "inputs": "No inputs specified",
+    "outputs": "200: utm; 401 (schema unspecified)",
+    "authentication": [
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/me.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Chat Completions",
+    "method": "POST",
+    "path": "/api/{workspaceID}/v1/chat/completions",
+    "summary": "Create a chat completion",
+    "inputs": "workspaceID (path, required); application/json: model*, messages*, stream, stream_options, max_tokens, max_completion_tokens, temperature, top_p, top_k, frequency_penalty, presence_penalty, repetition_penalty, seed, n, stop, logit_bias, logprobs, top_logprobs, min_p, top_a, reasoning, reasoning_effort, modalities, functions, tools, tool_choice, parallel_tool_calls, response_format, prediction, metadata, store, service_tier, user",
+    "outputs": "200: id, model, object, created, choices, usage; 400 (schema unspecified); 401 (schema unspecified); 402 (schema unspecified); 403 (schema unspecified); 503 (schema unspecified)",
+    "authentication": [
+      {
+        "apiKey": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-chat-completions.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Chat Completions",
+    "method": "GET",
+    "path": "/api/{workspaceID}/v1/models",
+    "summary": "List available models",
+    "inputs": "workspaceID (path, required)",
+    "outputs": "200: object, data; 401 (schema unspecified)",
+    "authentication": [
+      {
+        "apiKey": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-chat-completions.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Embeddings",
+    "method": "POST",
+    "path": "/api/{workspaceID}/v1/embeddings",
+    "summary": "Create embeddings",
+    "inputs": "workspaceID (path, required); application/json: input*, model*, dimensions, encoding_format, user",
+    "outputs": "200: object, data, model, usage; 400 (schema unspecified); 401 (schema unspecified); 402 (schema unspecified); 503 (schema unspecified)",
+    "authentication": [
+      {
+        "apiKey": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-embeddings.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Image Generation",
+    "method": "POST",
+    "path": "/api/{workspaceID}/v1/images/edits",
+    "summary": "Edit images",
+    "inputs": "workspaceID (path, required); multipart/form-data: image, prompt, model, mask, input_fidelity, n, size, quality, background, output_format, output_compression, partial_images, response_format, stream, user",
+    "outputs": "200: id, created, data, usage; 400 (schema unspecified); 401 (schema unspecified); 402 (schema unspecified); 503 (schema unspecified)",
+    "authentication": [
+      {
+        "apiKey": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-image-generation.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Image Generation",
+    "method": "POST",
+    "path": "/api/{workspaceID}/v1/images/generations",
+    "summary": "Generate images",
+    "inputs": "workspaceID (path, required); application/json: prompt*, model*, n, size, quality, background, moderation, output_format, output_compression, partial_images, response_format, stream, style, user",
+    "outputs": "200: id, created, data, usage; 400 (schema unspecified); 401 (schema unspecified); 402 (schema unspecified); 503 (schema unspecified)",
+    "authentication": [
+      {
+        "apiKey": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-image-generation.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - API Keys",
+    "method": "POST",
+    "path": "/v1/keys",
+    "summary": "Create an API key",
+    "inputs": "application/json: name*, workspaces*",
+    "outputs": "201: name, enabled, workspaces, key, createdBy, _id; 400 (schema unspecified); 401 (schema unspecified); 409 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-keys.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - API Keys",
+    "method": "DELETE",
+    "path": "/v1/keys/{keyID}",
+    "summary": "Delete an API key",
+    "inputs": "keyID (path, required)",
+    "outputs": "204 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-keys.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - API Keys",
+    "method": "GET",
+    "path": "/v1/keys",
+    "summary": "List API keys",
+    "inputs": "teamID (query)",
+    "outputs": "200 (schema unspecified); 401 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-keys.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - API Keys",
+    "method": "PUT",
+    "path": "/v1/keys/{keyID}",
+    "summary": "Update an API key",
+    "inputs": "keyID (path, required); application/json: name, workspaces, enabled",
+    "outputs": "200: message; 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-keys.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Logs",
+    "method": "GET",
+    "path": "/v1/workspaces/{workspaceID}/logs/{logID}",
+    "summary": "Get log details (API key auth)",
+    "inputs": "workspaceID (path, required); logID (path, required)",
+    "outputs": "200 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "apiKey": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-logs.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Logs",
+    "method": "GET",
+    "path": "/v1/workspaces/{workspaceID}/playground/logs/{logID}",
+    "summary": "Get log details (playground auth)",
+    "inputs": "workspaceID (path, required); logID (path, required)",
+    "outputs": "200 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-logs.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Logs",
+    "method": "GET",
+    "path": "/v1/workspaces/{workspaceID}/logs",
+    "summary": "List logs",
+    "inputs": "workspaceID (path, required); from (query); to (query); model (query); url (query); page (query); count (query); key (query)",
+    "outputs": "200: logs, count; 401 (schema unspecified); 404 (schema unspecified); 416 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-logs.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Models",
+    "method": "GET",
+    "path": "/v1/models/{modelID}",
+    "summary": "Get a model",
+    "inputs": "modelID (path, required)",
+    "outputs": "200: model; 404 (schema unspecified)",
+    "authentication": [],
+    "source": "https://developers.liara.ir/spec/ai-models.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Models",
+    "method": "GET",
+    "path": "/v1/models",
+    "summary": "List all models",
+    "inputs": "No inputs specified",
+    "outputs": "200: models",
+    "authentication": [],
+    "source": "https://developers.liara.ir/spec/ai-models.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Models",
+    "method": "GET",
+    "path": "/v2/models",
+    "summary": "List models with filters",
+    "inputs": "search (query); sort (query); input_modalities (query); output_modalities (query); context_length_min (query); context_length_max (query); input_price_min (query); input_price_max (query); providers (query); supported_params (query); page (query)",
+    "outputs": "200: models, page, limit, total",
+    "authentication": [],
+    "source": "https://developers.liara.ir/spec/ai-models.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Playground",
+    "method": "POST",
+    "path": "/api/v1/{workspaceID}/playground/chat/completions",
+    "summary": "Playground chat completion",
+    "inputs": "workspaceID (path, required); application/json: model*, messages*, stream, temperature, max_tokens, tools",
+    "outputs": "200 (schema unspecified); 401 (schema unspecified); 403 (schema unspecified); 402 (schema unspecified); 503 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-playground.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Playground",
+    "method": "GET",
+    "path": "/api/v1/{workspaceID}/playground/models",
+    "summary": "Playground list models",
+    "inputs": "workspaceID (path, required)",
+    "outputs": "200: object, data; 401 (schema unspecified); 403 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-playground.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Playground",
+    "method": "POST",
+    "path": "/api/v1/{workspaceID}/playground/images/edits",
+    "summary": "Playground image edit",
+    "inputs": "workspaceID (path, required); multipart/form-data: image, prompt, model, mask",
+    "outputs": "200 (schema unspecified); 401 (schema unspecified); 403 (schema unspecified); 503 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-playground.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Playground",
+    "method": "POST",
+    "path": "/api/v1/{workspaceID}/playground/images/generations",
+    "summary": "Playground image generation",
+    "inputs": "workspaceID (path, required); application/json: prompt*, model*, n, size, quality, output_format",
+    "outputs": "200 (schema unspecified); 401 (schema unspecified); 403 (schema unspecified); 503 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-playground.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Audio Transcriptions",
+    "method": "POST",
+    "path": "/api/{workspaceID}/v1/audio/transcriptions",
+    "summary": "Transcribe audio",
+    "inputs": "workspaceID (path, required); application/json: model*, input_audio*, language, response_format, temperature, timestamp_granularities; multipart/form-data: model*, file*, language, response_format, temperature, timestamp_granularities",
+    "outputs": "200: text, task, language, duration, segments; 400: statusCode, error, message; 401: statusCode, error, message; 402: statusCode, error, message; 403: statusCode, error, message; 502: statusCode, error, message; 503: statusCode, error, message",
+    "authentication": [
+      {
+        "apiKey": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-stt.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Text to Speech",
+    "method": "POST",
+    "path": "/api/{workspaceID}/v1/audio/speech",
+    "summary": "Generate speech from text",
+    "inputs": "workspaceID (path, required); application/json: input*, model*, voice, response_format, speed, input_references, provider",
+    "outputs": "200 (schema unspecified); 400: statusCode, error, message; 401: statusCode, error, message; 402: statusCode, error, message; 403: statusCode, error, message; 502: statusCode, error, message; 503: statusCode, error, message",
+    "authentication": [
+      {
+        "apiKey": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-tts.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Workspaces",
+    "method": "GET",
+    "path": "/v1/workspaces/{workspaceID}/models/{modelID}/limits",
+    "summary": "Get model limits",
+    "inputs": "workspaceID (path, required); modelID (path, required)",
+    "outputs": "200: minimumBalance, maximumToken; 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-workspaces.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Workspaces",
+    "method": "PATCH",
+    "path": "/v1/workspaces/{workspaceID}/change-provider-preferences",
+    "summary": "Change provider preferences",
+    "inputs": "workspaceID (path, required); application/json: preference*",
+    "outputs": "200 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-workspaces.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Workspaces",
+    "method": "POST",
+    "path": "/v1/workspaces/{workspaceID}/resize",
+    "summary": "Resize workspace (change plan)",
+    "inputs": "workspaceID (path, required); application/json: plan*",
+    "outputs": "200 (schema unspecified); 401 (schema unspecified); 402 (schema unspecified); 404 (schema unspecified); 410 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-workspaces.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Workspaces",
+    "method": "POST",
+    "path": "/v1/workspaces/{workspaceID}/unfreeze",
+    "summary": "Unfreeze workspace",
+    "inputs": "workspaceID (path, required)",
+    "outputs": "200 (schema unspecified); 401 (schema unspecified); 402 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-workspaces.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Workspaces",
+    "method": "GET",
+    "path": "/v1/workspaces/{workspaceID}/free-tokens",
+    "summary": "Get free token usage",
+    "inputs": "workspaceID (path, required)",
+    "outputs": "200 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-workspaces.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Workspaces",
+    "method": "GET",
+    "path": "/v1/workspaces/{workspaceID}/activity",
+    "summary": "Get workspace activity",
+    "inputs": "workspaceID (path, required); filter (query); key (query)",
+    "outputs": "200 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 416 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-workspaces.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Workspaces",
+    "method": "GET",
+    "path": "/v1/workspaces/{workspaceName}/check-availability",
+    "summary": "Check workspace name availability",
+    "inputs": "workspaceName (path, required)",
+    "outputs": "200 (schema unspecified); 409 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-workspaces.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Workspaces",
+    "method": "POST",
+    "path": "/v1/workspaces",
+    "summary": "Create a workspace",
+    "inputs": "application/json: name*, plan*",
+    "outputs": "200: workspace; 400 (schema unspecified); 401 (schema unspecified); 402 (schema unspecified); 403 (schema unspecified); 409 (schema unspecified); 410 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-workspaces.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Workspaces",
+    "method": "DELETE",
+    "path": "/v1/workspaces/{workspaceID}",
+    "summary": "Delete a workspace",
+    "inputs": "workspaceID (path, required)",
+    "outputs": "200 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-workspaces.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Workspaces",
+    "method": "GET",
+    "path": "/v1/workspaces/{workspaceID}",
+    "summary": "Get workspace details",
+    "inputs": "workspaceID (path, required)",
+    "outputs": "200: workspace; 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-workspaces.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "AI - Workspaces",
+    "method": "GET",
+    "path": "/v1/workspaces",
+    "summary": "List workspaces",
+    "inputs": "No inputs specified",
+    "outputs": "200: workspaces; 401 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/ai-workspaces.yaml",
+    "servers": [
+      {
+        "url": "https://ai.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Billing API",
+    "method": "GET",
+    "path": "/v1/billing",
+    "summary": "Get current user billing information",
+    "inputs": "No inputs specified",
+    "outputs": "200: user; 401 (schema unspecified)",
+    "authentication": [
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/billing.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DBaaS",
+    "method": "POST",
+    "path": "/v1/databases/{id}/backups",
+    "summary": "Backup a database",
+    "inputs": "id (path, required)",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dbaas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DBaaS",
+    "method": "POST",
+    "path": "/v1/databases/{id}/backups/{name}/download",
+    "summary": "Download a backup",
+    "inputs": "id (path, required); name (path, required)",
+    "outputs": "200: link; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dbaas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DBaaS",
+    "method": "GET",
+    "path": "/v1/databases/{id}/backups",
+    "summary": "Get all backups",
+    "inputs": "id (path, required)",
+    "outputs": "200: backups; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dbaas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DBaaS",
+    "method": "POST",
+    "path": "/v1/databases/{id}/control-panel/{status}",
+    "summary": "Change control-panel status",
+    "inputs": "id (path, required); status (path, required)",
+    "outputs": "200: controlPanelID; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dbaas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DBaaS",
+    "method": "PATCH",
+    "path": "/v1/databases/{id}/public-network/{status}",
+    "summary": "Change public network status",
+    "inputs": "id (path, required); status (path, required)",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dbaas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DBaaS",
+    "method": "POST",
+    "path": "/v1/databases",
+    "summary": "Create a database",
+    "inputs": "application/json: hostname, options, publicNetwork, type, planID, version",
+    "outputs": "200: databaseID; 400 (schema unspecified); 401 (schema unspecified); 409 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dbaas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DBaaS",
+    "method": "DELETE",
+    "path": "/v1/databases/{id}",
+    "summary": "Delete a database",
+    "inputs": "id (path, required)",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dbaas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DBaaS",
+    "method": "GET",
+    "path": "/v1/databases/{id}",
+    "summary": "Get a database",
+    "inputs": "id (path, required)",
+    "outputs": "200: database; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dbaas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DBaaS",
+    "method": "GET",
+    "path": "/v1/databases",
+    "summary": "Get all databases",
+    "inputs": "No inputs specified",
+    "outputs": "200: databases; 400 (schema unspecified); 401 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dbaas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DBaaS",
+    "method": "POST",
+    "path": "/v1/databases/{id}/actions/scale",
+    "summary": "Power on or power off a database",
+    "inputs": "id (path, required); application/json: scale*",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dbaas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DBaaS",
+    "method": "POST",
+    "path": "/v1/databases/{id}/resize",
+    "summary": "Resize a database",
+    "inputs": "id (path, required); application/json: disk, planID*",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dbaas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DBaaS",
+    "method": "PATCH",
+    "path": "/v1/databases/{id}/settings",
+    "summary": "Settings a database",
+    "inputs": "id (path, required); application/json: type, options",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dbaas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DBaaS",
+    "method": "GET",
+    "path": "/v1/databases/{name}/events",
+    "summary": "Get events of the database",
+    "inputs": "name (path, required); search (query); start (query); end (query)",
+    "outputs": "200: data; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dbaas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DBaaS",
+    "method": "GET",
+    "path": "/v1/databases/{id}/metrics/cpu",
+    "summary": "Get cpu reports of database",
+    "inputs": "id (path, required); since (query, required)",
+    "outputs": "200: end, result; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dbaas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DBaaS",
+    "method": "GET",
+    "path": "/v1/databases/{id}/metrics/memory",
+    "summary": "Get memory reports of database",
+    "inputs": "id (path, required); since (query, required)",
+    "outputs": "200: end, result; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dbaas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DBaaS",
+    "method": "GET",
+    "path": "/v1/databases/{id}/metrics/network-receive",
+    "summary": "Get network-receive reports of database",
+    "inputs": "id (path, required); since (query, required)",
+    "outputs": "200: end, result; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dbaas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DBaaS",
+    "method": "GET",
+    "path": "/v1/databases/{id}/metrics/network-transmit",
+    "summary": "Get network-transmit reports of database",
+    "inputs": "id (path, required); since (query, required)",
+    "outputs": "200: end, result; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dbaas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DBaaS",
+    "method": "GET",
+    "path": "/v1/databases/{id}/metrics/summary",
+    "summary": "Get summary reports of database",
+    "inputs": "id (path, required)",
+    "outputs": "200: cpuUsage, memoryUsage, disksUsage; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dbaas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DNS",
+    "method": "PUT",
+    "path": "/api/v1/zones/{zone}/check",
+    "summary": "check nameserver",
+    "inputs": "zone (path, required)",
+    "outputs": "201: status, data; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 406 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dns.yaml",
+    "servers": [
+      {
+        "url": "https://dns-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DNS",
+    "method": "POST",
+    "path": "/api/v1/zones/{zone}/dns-records",
+    "summary": "Create dns record",
+    "inputs": "zone (path, required); application/json: name, type, ttl, contents",
+    "outputs": "201: status, data; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dns.yaml",
+    "servers": [
+      {
+        "url": "https://dns-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DNS",
+    "method": "DELETE",
+    "path": "/api/v1/zones/{zone}/dns-records/{id}",
+    "summary": "delete dns record",
+    "inputs": "zone (path, required); id (path, required)",
+    "outputs": "204 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dns.yaml",
+    "servers": [
+      {
+        "url": "https://dns-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DNS",
+    "method": "PUT",
+    "path": "/api/v1/zones/{zone}/dns-records/{id}",
+    "summary": "edit dns record",
+    "inputs": "zone (path, required); id (path, required); application/json: name, type, ttl, contents",
+    "outputs": "200: status, data; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dns.yaml",
+    "servers": [
+      {
+        "url": "https://dns-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DNS",
+    "method": "GET",
+    "path": "/api/v1/zones/{zone}/dns-records",
+    "summary": "Get all dns record",
+    "inputs": "zone (path, required)",
+    "outputs": "200: status, data; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dns.yaml",
+    "servers": [
+      {
+        "url": "https://dns-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DNS",
+    "method": "GET",
+    "path": "/api/v1/zones/{zone}/dns-records/{id}",
+    "summary": "Get dns record",
+    "inputs": "zone (path, required); id (path, required)",
+    "outputs": "200: status, data; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dns.yaml",
+    "servers": [
+      {
+        "url": "https://dns-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DNS",
+    "method": "POST",
+    "path": "/api/v1/zones",
+    "summary": "Create Zone",
+    "inputs": "application/json: name*",
+    "outputs": "201: status, data; 400 (schema unspecified); 401 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dns.yaml",
+    "servers": [
+      {
+        "url": "https://dns-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DNS",
+    "method": "DELETE",
+    "path": "/api/v1/zones/{zone}",
+    "summary": "Delete Zone",
+    "inputs": "zone (path, required)",
+    "outputs": "200: status, data; 204 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dns.yaml",
+    "servers": [
+      {
+        "url": "https://dns-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DNS",
+    "method": "GET",
+    "path": "/api/v1/zones/{zone}",
+    "summary": "Get Zone",
+    "inputs": "zone (path, required)",
+    "outputs": "200: status, data; 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dns.yaml",
+    "servers": [
+      {
+        "url": "https://dns-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "DNS",
+    "method": "GET",
+    "path": "/api/v1/zones",
+    "summary": "List all zones",
+    "inputs": "No inputs specified",
+    "outputs": "200: status, data",
+    "authentication": [
+      {
+        "jwt": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/dns.yaml",
+    "servers": [
+      {
+        "url": "https://dns-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara File Browser API Documentaion",
+    "method": "POST",
+    "path": "/v1/projects/{projectID}/disks/{diskName}/create",
+    "summary": "Create file or dir in FileBrowser",
+    "inputs": "projectID (path, required); diskName (path, required); path (query, required); type (query); name (query)",
+    "outputs": "201 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/file-browser.yaml",
+    "servers": [
+      {
+        "url": "https://{filebrowser-url}",
+        "variables": {
+          "filebrowser-url": {
+            "default": "Example",
+            "description": "This value is assigned by the service provider."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "service": "Liara File Browser API Documentaion",
+    "method": "POST",
+    "path": "/v1/projects/{projectID}/disks/{diskName}/createLink",
+    "summary": "Create link for file in FileBrowser",
+    "inputs": "projectID (path, required); diskName (path, required); path (query, required); type (query); expire (query)",
+    "outputs": "201: queries; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/file-browser.yaml",
+    "servers": [
+      {
+        "url": "https://{filebrowser-url}",
+        "variables": {
+          "filebrowser-url": {
+            "default": "Example",
+            "description": "This value is assigned by the service provider."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "service": "Liara File Browser API Documentaion",
+    "method": "DELETE",
+    "path": "/v1/projects/{projectID}/disks/{diskName}/delete",
+    "summary": "Delete file or dir in FileBrowser",
+    "inputs": "projectID (path, required); diskName (path, required); path (query, required)",
+    "outputs": "202 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/file-browser.yaml",
+    "servers": [
+      {
+        "url": "https://{filebrowser-url}",
+        "variables": {
+          "filebrowser-url": {
+            "default": "Example",
+            "description": "This value is assigned by the service provider."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "service": "Liara File Browser API Documentaion",
+    "method": "POST",
+    "path": "/v1/projects/{projectID}/disks/{diskName}/extract",
+    "summary": "Extract file in FileBrowser",
+    "inputs": "projectID (path, required); diskName (path, required); path (query, required); output (query, required); overwrite (query)",
+    "outputs": "201 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/file-browser.yaml",
+    "servers": [
+      {
+        "url": "https://{filebrowser-url}",
+        "variables": {
+          "filebrowser-url": {
+            "default": "Example",
+            "description": "This value is assigned by the service provider."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "service": "Liara File Browser API Documentaion",
+    "method": "GET",
+    "path": "/v1/projects/{projectID}/disks/{diskName}/list",
+    "summary": "Get list from FileBrowser",
+    "inputs": "projectID (path, required); diskName (path, required); path (query, required); sortType (query); sortDirection (query); page (query)",
+    "outputs": "200: items, diskName, sorting, path, name, numDirs, numFiles, size, extension, isDir, isSymlink, targetSymlink, type, mode, createAt, modifiedAt; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/file-browser.yaml",
+    "servers": [
+      {
+        "url": "https://{filebrowser-url}",
+        "variables": {
+          "filebrowser-url": {
+            "default": "Example",
+            "description": "This value is assigned by the service provider."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "service": "Liara File Browser API Documentaion",
+    "method": "POST",
+    "path": "/v1/projects/{projectID}/disks/{diskName}/rename",
+    "summary": "Rename file or dir in FileBrowser",
+    "inputs": "projectID (path, required); diskName (path, required); path (query, required); newName (query)",
+    "outputs": "201 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/file-browser.yaml",
+    "servers": [
+      {
+        "url": "https://{filebrowser-url}",
+        "variables": {
+          "filebrowser-url": {
+            "default": "Example",
+            "description": "This value is assigned by the service provider."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "service": "Liara File Browser API Documentaion",
+    "method": "GET",
+    "path": "/v1/projects/{projectID}/disks/{diskName}/search",
+    "summary": "Search file or dir in FileBrowser",
+    "inputs": "projectID (path, required); diskName (path, required); path (query, required); sortType (query); sortDirection (query); page (query); targetPath (query)",
+    "outputs": "200: items, diskName, sorting; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/file-browser.yaml",
+    "servers": [
+      {
+        "url": "https://{filebrowser-url}",
+        "variables": {
+          "filebrowser-url": {
+            "default": "Example",
+            "description": "This value is assigned by the service provider."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "service": "Liara File Browser API Documentaion",
+    "method": "GET",
+    "path": "/v1/projects/{projectID}/disks/{diskName}/serve",
+    "summary": "Serve file from FileBrowser",
+    "inputs": "projectID (path, required); diskName (path, required); path (query, required); type (query, required); token (query, required)",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/file-browser.yaml",
+    "servers": [
+      {
+        "url": "https://{filebrowser-url}",
+        "variables": {
+          "filebrowser-url": {
+            "default": "Example",
+            "description": "This value is assigned by the service provider."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "service": "Liara File Browser API Documentaion",
+    "method": "POST",
+    "path": "/v1/projects/{projectID}/disks/{diskName}/upload",
+    "summary": "Upload file in FileBrowser",
+    "inputs": "projectID (path, required); diskName (path, required); path (query, required); overwrite (query); multipart/form-data: file*",
+    "outputs": "201 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/file-browser.yaml",
+    "servers": [
+      {
+        "url": "https://{filebrowser-url}",
+        "variables": {
+          "filebrowser-url": {
+            "default": "Example",
+            "description": "This value is assigned by the service provider."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "service": "Liara Iaas API Documentaion",
+    "method": "POST",
+    "path": "/vm/disk/{id}",
+    "summary": "Create a new disk for a VM",
+    "inputs": "id (path, required); application/json: size",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 428 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/Iaas.yaml",
+    "servers": [
+      {
+        "url": "https://iaas-api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Iaas API Documentaion",
+    "method": "POST",
+    "path": "/vm",
+    "summary": "Create a vm",
+    "inputs": "application/json: name, OS, plan, config",
+    "outputs": "200: taskID; 400 (schema unspecified); 401 (schema unspecified); 412 (schema unspecified); 429 (schema unspecified); 402 (schema unspecified); 409 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/Iaas.yaml",
+    "servers": [
+      {
+        "url": "https://iaas-api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Iaas API Documentaion",
+    "method": "DELETE",
+    "path": "/vm/disk/{vmID}/{diskID}",
+    "summary": "Delete a disk",
+    "inputs": "vmID (path, required); diskID (path, required)",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/Iaas.yaml",
+    "servers": [
+      {
+        "url": "https://iaas-api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Iaas API Documentaion",
+    "method": "DELETE",
+    "path": "/vm/{id}",
+    "summary": "Delete a vm",
+    "inputs": "id (path, required)",
+    "outputs": "200: taskID; 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/Iaas.yaml",
+    "servers": [
+      {
+        "url": "https://iaas-api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Iaas API Documentaion",
+    "method": "POST",
+    "path": "/vm/disk/{vmID}/{diskID}",
+    "summary": "Extend a vm Disk",
+    "inputs": "vmID (path, required); diskID (path, required); application/json: newSize",
+    "outputs": "200: taskID; 400 (schema unspecified); 401 (schema unspecified); 428 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/Iaas.yaml",
+    "servers": [
+      {
+        "url": "https://iaas-api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Iaas API Documentaion",
+    "method": "GET",
+    "path": "/oss",
+    "summary": "Get all available operating systems",
+    "inputs": "No inputs specified",
+    "outputs": "200: ubuntu, debian",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/Iaas.yaml",
+    "servers": [
+      {
+        "url": "https://iaas-api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Iaas API Documentaion",
+    "method": "GET",
+    "path": "/plans",
+    "summary": "Get all plans",
+    "inputs": "No inputs specified",
+    "outputs": "200: plans",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/Iaas.yaml",
+    "servers": [
+      {
+        "url": "https://iaas-api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Iaas API Documentaion",
+    "method": "GET",
+    "path": "/vm",
+    "summary": "Get all vms",
+    "inputs": "No inputs specified",
+    "outputs": "200: vms; 401 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/Iaas.yaml",
+    "servers": [
+      {
+        "url": "https://iaas-api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Iaas API Documentaion",
+    "method": "GET",
+    "path": "/vm/disk/{id}",
+    "summary": "Get disk details",
+    "inputs": "id (path, required)",
+    "outputs": "200: availableSize, disks; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/Iaas.yaml",
+    "servers": [
+      {
+        "url": "https://iaas-api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Iaas API Documentaion",
+    "method": "GET",
+    "path": "/vm/traffic-graph/{id}",
+    "summary": "Get traffic graph of a vm",
+    "inputs": "id (path, required)",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/Iaas.yaml",
+    "servers": [
+      {
+        "url": "https://iaas-api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Iaas API Documentaion",
+    "method": "GET",
+    "path": "/vm/traffic-volume/{id}",
+    "summary": "Get traffic volume of a vm",
+    "inputs": "id (path, required)",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/Iaas.yaml",
+    "servers": [
+      {
+        "url": "https://iaas-api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Iaas API Documentaion",
+    "method": "GET",
+    "path": "/vm/{id}",
+    "summary": "Get vm details",
+    "inputs": "id (path, required)",
+    "outputs": "200: _id, plan, OS, state, config, name, createdAt, guestState, power, IPs, planDetails; 401 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/Iaas.yaml",
+    "servers": [
+      {
+        "url": "https://iaas-api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Iaas API Documentaion",
+    "method": "GET",
+    "path": "/vm/operation/{id}",
+    "summary": "Get vm operations",
+    "inputs": "id (path, required)",
+    "outputs": "200: operations; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/Iaas.yaml",
+    "servers": [
+      {
+        "url": "https://iaas-api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Iaas API Documentaion",
+    "method": "POST",
+    "path": "/vm/reset-network/{id}",
+    "summary": "Reset a vm network",
+    "inputs": "id (path, required)",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 409 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/Iaas.yaml",
+    "servers": [
+      {
+        "url": "https://iaas-api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Iaas API Documentaion",
+    "method": "POST",
+    "path": "/vm/reset-password/{id}",
+    "summary": "Reset a vm password",
+    "inputs": "id (path, required)",
+    "outputs": "200: password; 400 (schema unspecified); 401 (schema unspecified); 409 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/Iaas.yaml",
+    "servers": [
+      {
+        "url": "https://iaas-api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Iaas API Documentaion",
+    "method": "PATCH",
+    "path": "/vm/resize/{id}",
+    "summary": "Resize a vm",
+    "inputs": "id (path, required); application/json: plan",
+    "outputs": "200: taskID; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/Iaas.yaml",
+    "servers": [
+      {
+        "url": "https://iaas-api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Iaas API Documentaion",
+    "method": "PATCH",
+    "path": "/vm/power/{id}",
+    "summary": "Set vm power",
+    "inputs": "id (path, required); application/json: action",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 409 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/Iaas.yaml",
+    "servers": [
+      {
+        "url": "https://iaas-api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Iaas API Documentaion",
+    "method": "POST",
+    "path": "/vm/unfreeze/{id}",
+    "summary": "Unfreeze a vm",
+    "inputs": "id (path, required)",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 402 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/Iaas.yaml",
+    "servers": [
+      {
+        "url": "https://iaas-api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "POST",
+    "path": "/api/v1/mails/{mailServerID}/accounts",
+    "summary": "add mail account",
+    "inputs": "mailServerID (path, required); application/json: name*",
+    "outputs": "201: status; 400 (schema unspecified); 404 (schema unspecified); 403 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/mails/{mailServerID}/accounts/{accountName}/check-availability",
+    "summary": "check if mail account is available",
+    "inputs": "mailServerID (path, required); accountName (path, required)",
+    "outputs": "200: status; 400 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "DELETE",
+    "path": "/api/v1/mails/{mailServerID}/accounts/{accountID}",
+    "summary": "delete mail account",
+    "inputs": "mailServerID (path, required); accountID (path, required)",
+    "outputs": "204 (schema unspecified); 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/mails/{mailServerID}/accounts",
+    "summary": "get all mail accounts",
+    "inputs": "mailServerID (path, required)",
+    "outputs": "200: status, data; 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/mails/{mailServerID}/messages/{messageID}/attachments/{attachmentID}",
+    "summary": "download attachment",
+    "inputs": "mailServerID (path, required); messageID (path, required); attachmentID (path, required)",
+    "outputs": "200: status, data; 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/mails/{mailServerID}/messages/{messageID}/attachments",
+    "summary": "get all attachments for message",
+    "inputs": "mailServerID (path, required); messageID (path, required)",
+    "outputs": "200: status, data; 400 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/mails/{mailServerID}/messages/{messageID}/events",
+    "summary": "get all events for message",
+    "inputs": "mailServerID (path, required); messageID (path, required); page (query); count (query)",
+    "outputs": "200: status, data; 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "POST",
+    "path": "/api/v1/mails/{mailServerID}/accounts/{accountID}/forwards",
+    "summary": "add address endpoint to forwarding mails",
+    "inputs": "mailServerID (path, required); accountID (path, required); application/json: address*",
+    "outputs": "201: status; 400 (schema unspecified); 403 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "DELETE",
+    "path": "/api/v1/mails/{mailServerID}/accounts/{accountID}/forwards/{addressID}",
+    "summary": "delete extra endpoint address",
+    "inputs": "mailServerID (path, required); accountID (path, required); addressID (path, required)",
+    "outputs": "204 (schema unspecified); 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/mails/{mailServerID}/accounts/{accountID}/forwards",
+    "summary": "get all extra address to forwarding mails",
+    "inputs": "mailServerID (path, required); accountID (path, required)",
+    "outputs": "200: status, data; 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "POST",
+    "path": "/api/v1/mails/{mailServerID}/inboundrules",
+    "summary": "add inbound rule.",
+    "inputs": "mailServerID (path, required); application/json: rule*",
+    "outputs": "201: status; 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "DELETE",
+    "path": "/api/v1/mail/{mailServerID}/inboundrules/{inboundruleID}",
+    "summary": "delete inbound rule.",
+    "inputs": "mailServerID (path, required); inboundruleID (path, required)",
+    "outputs": "204 (schema unspecified); 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/mails/{mailServerID}/inboundrules",
+    "summary": "get all inbound rules.",
+    "inputs": "mailServerID (path, required)",
+    "outputs": "200: status, data; 400 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/mails/{domain}/check-availability",
+    "summary": "check if domain name is available",
+    "inputs": "domain (path, required)",
+    "outputs": "200: status; 400 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/mails/{mailServerID}/counts",
+    "summary": "count number of sent mails every day",
+    "inputs": "mailServerID (path, required); lastNDays (query)",
+    "outputs": "200: status, data; 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "POST",
+    "path": "/api/v1/mails",
+    "summary": "create mail server",
+    "inputs": "application/json: plan*, domain*, mode*",
+    "outputs": "201: status; 400 (schema unspecified); 402 (schema unspecified); 403 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "DELETE",
+    "path": "/api/v1/mails/{mailServerID}",
+    "summary": "delete mail server",
+    "inputs": "mailServerID (path, required)",
+    "outputs": "204 (schema unspecified); 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "PATCH",
+    "path": "/api/v1/mails/{mailServerID}",
+    "summary": "edit mail server",
+    "inputs": "mailServerID (path, required); application/json: mode*, inboundSpamThreshold*",
+    "outputs": "200: status; 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/mails/{mailServerID}/metrics",
+    "summary": "gain more info on recent usage",
+    "inputs": "mailServerID (path, required)",
+    "outputs": "200: status, data; 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/mails",
+    "summary": "get all mail servers",
+    "inputs": "No inputs specified",
+    "outputs": "200: status, data; 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/mails/{mailServerID}",
+    "summary": "get single mail server",
+    "inputs": "mailServerID (path, required)",
+    "outputs": "200: status, data; 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/mails/{mailServerID}/dns-check",
+    "summary": "mail server check dns status",
+    "inputs": "mailServerID (path, required)",
+    "outputs": "200: status, data; 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "PATCH",
+    "path": "/api/v1/mails/{mailServerID}/unfreeze",
+    "summary": "unfreeze mail server - If you had reserved a plan, it will be your new plan.",
+    "inputs": "mailServerID (path, required)",
+    "outputs": "204 (schema unspecified); 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "DELETE",
+    "path": "/api/v1/mails/{mailServerID}/messages/{messageID}/",
+    "summary": "delete a message permenantly",
+    "inputs": "mailServerID (path, required); messageID (path, required)",
+    "outputs": "200 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "POST",
+    "path": "/api/v1/mails/{mailServerID}/messages/{messageID}/temporary-access",
+    "summary": "generate temporary access to email html",
+    "inputs": "mailServerID (path, required); messageID (path, required); expiration (query)",
+    "outputs": "201: status, data; 400 (schema unspecified); 403 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/mails/{mailServerID}/messages",
+    "summary": "get all mails",
+    "inputs": "mailServerID (path, required); page (query); count (query); direction (query, required); state (query); subject (query); from (query); to (query); isTrash (query)",
+    "outputs": "200: status, data; 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/mails/{mailServerID}/messages/{messageID}/render",
+    "summary": "get single mail html",
+    "inputs": "mailServerID (path, required); messageID (path, required); token (query, required)",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 403 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/mails/{mailServerID}/messages/{messageID}",
+    "summary": "get single mail",
+    "inputs": "mailServerID (path, required); messageID (path, required)",
+    "outputs": "200: status, data; 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "POST",
+    "path": "/api/v1/mails/{mailServerID}/messages",
+    "summary": "send a mail",
+    "inputs": "mailServerID (path, required); application/json: html, text, subject*, to*, from*, replyTo, attachments",
+    "outputs": "201: status; 400 (schema unspecified); 403 (schema unspecified); 404 (schema unspecified); 406 (schema unspecified); 429 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "PATCH",
+    "path": "/api/v1/mails/{mailServerID}/messages/{messageID}/",
+    "summary": "trash and untrash a message",
+    "inputs": "mailServerID (path, required); messageID (path, required); application/json: isTrash*",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "POST",
+    "path": "/api/v1/mails/{mailServerID}/plan",
+    "summary": "change mail server plan",
+    "inputs": "mailServerID (path, required); application/json: planName",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 402 (schema unspecified); 403 (schema unspecified); 404 (schema unspecified); 428 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/mails/{mailServerID}/plan",
+    "summary": "get cuurent mail server plan history",
+    "inputs": "mailServerID (path, required)",
+    "outputs": "200: data; 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "DELETE",
+    "path": "/api/v1/mails/{mailServerID}/plan",
+    "summary": "remove a reserved plan",
+    "inputs": "mailServerID (path, required); application/json: reservedPlan",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 404 (schema unspecified); 428 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "DELETE",
+    "path": "/api/v1/mails/{mailServerID}/smtp-credentials/{username}",
+    "summary": "delete smtp credential",
+    "inputs": "mailServerID (path, required); username (path, required)",
+    "outputs": "204 (schema unspecified); 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "POST",
+    "path": "/api/v1/mails/{mailServerID}/smtp-credentials",
+    "summary": "generate credentials to connet mail server with SMTP",
+    "inputs": "mailServerID (path, required); application/json: description",
+    "outputs": "201: status, data; 400 (schema unspecified); 403 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/mails/{mailServerID}/smtp-credentials",
+    "summary": "get credential to connect to mail server with SMTP",
+    "inputs": "mailServerID (path, required)",
+    "outputs": "200: status, data; 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "PATCH",
+    "path": "/api/v1/mails/{mailServerID}/smtp-credentials",
+    "summary": "revoke credentials to connect mail server with SMTP",
+    "inputs": "mailServerID (path, required); application/json: username*",
+    "outputs": "200: status, data; 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "POST",
+    "path": "/api/v1/mails/{mailServerID}/tags",
+    "summary": "create a new tag",
+    "inputs": "mailServerID (path, required); application/json: tag, data",
+    "outputs": "201 (schema unspecified); 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/mails/{mailServerID}/tags",
+    "summary": "get all tags",
+    "inputs": "mailServerID (path, required)",
+    "outputs": "200: tag, createdAt; 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Mail API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/mails/{mailServerID}/tags/stats",
+    "summary": "get tags stats",
+    "inputs": "mailServerID (path, required); lastNDays (query)",
+    "outputs": "200: data; 400 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/mail.yaml",
+    "servers": [
+      {
+        "url": "https://mail-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "PATCH",
+    "path": "/api/v1/buckets/{bucket}/type/{permission}",
+    "summary": "change Bucket Access Policy",
+    "inputs": "bucket (path, required); permission (path, required)",
+    "outputs": "200: status, permission; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/buckets/{bucket}/check-availability",
+    "summary": "Check Bucket availability",
+    "inputs": "bucket (path, required)",
+    "outputs": "200: status; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "POST",
+    "path": "/api/v1/buckets",
+    "summary": "Create Bucket",
+    "inputs": "application/json: name, plan, permission",
+    "outputs": "201: status; 400 (schema unspecified); 401 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "DELETE",
+    "path": "/api/v1/buckets/{bucket}",
+    "summary": "Destroy Bucket",
+    "inputs": "bucket (path, required)",
+    "outputs": "204 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/buckets/{bucket}",
+    "summary": "Get Single Buckets",
+    "inputs": "bucket (path, required)",
+    "outputs": "200: status, bucket; 401 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/buckets",
+    "summary": "List all Buckets",
+    "inputs": "No inputs specified",
+    "outputs": "200: status, buckets; 401 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/buckets/migrations",
+    "summary": "list migration operation",
+    "inputs": "No inputs specified",
+    "outputs": "200: status, migrations; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/buckets/migration/from",
+    "summary": "List storage service buckets",
+    "inputs": "No inputs specified",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "POST",
+    "path": "/api/v1/buckets/migrates",
+    "summary": "Migrating buckets",
+    "inputs": "application/json: from, to, path",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "PATCH",
+    "path": "/api/v1/buckets/{bucket}/upgrade/{plan}",
+    "summary": "Upgrade Bucket",
+    "inputs": "bucket (path, required); plan (path, required)",
+    "outputs": "200: status, quota; 400 (schema unspecified); 401 (schema unspecified); 403 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified); 502 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "POST",
+    "path": "/api/v1/buckets/{bucket}/folders",
+    "summary": "Create Folder",
+    "inputs": "bucket (path, required); application/json: path",
+    "outputs": "201: status, data; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "DELETE",
+    "path": "/api/v1/buckets/{bucket}/folders",
+    "summary": "Delete Folder",
+    "inputs": "bucket (path, required); path (query, required)",
+    "outputs": "204 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "POST",
+    "path": "/api/v1/keys",
+    "summary": "Create Keys",
+    "inputs": "application/json: buckets, description",
+    "outputs": "201: status, data; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "DELETE",
+    "path": "/api/v1/keys/{key}",
+    "summary": "Delete Key",
+    "inputs": "key (path, required)",
+    "outputs": "204 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/keys/{key}",
+    "summary": "Get Key",
+    "inputs": "key (path, required)",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/keys",
+    "summary": "Get List of Keys",
+    "inputs": "No inputs specified",
+    "outputs": "200: status, keys; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "PATCH",
+    "path": "/api/v1/keys/{key}/revoke",
+    "summary": "Revoke secret key",
+    "inputs": "key (path, required)",
+    "outputs": "200: status, accessKey, secretKey; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "PATCH",
+    "path": "/api/v1/keys/{key}",
+    "summary": "Update key",
+    "inputs": "key (path, required); application/json: buckets, description",
+    "outputs": "200: status; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/buckets/{bucket}/metrics/{stat}",
+    "summary": "get statistic",
+    "inputs": "bucket (path, required); stat (path, required)",
+    "outputs": "200: status, data; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/buckets/{bucket}/metrics/historical",
+    "summary": "hisotrical metrics",
+    "inputs": "bucket (path, required); since (query, required)",
+    "outputs": "200: status, data; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/buckets/{bucket}/metrics/summary",
+    "summary": "metrics summary",
+    "inputs": "bucket (path, required)",
+    "outputs": "200: status, data; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "DELETE",
+    "path": "/api/v1/buckets/{bucket}/objects/{prefix}",
+    "summary": "Delete Object",
+    "inputs": "bucket (path, required); prefix (path, required)",
+    "outputs": "204 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/buckets/{bucket}/download/${object}",
+    "summary": "Download Object",
+    "inputs": "bucket (path, required); object (path, required); expiry (query)",
+    "outputs": "200: status, data; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/buckets/{bucket}/objects/statistics/{object}",
+    "summary": "Get Stat Object",
+    "inputs": "bucket (path, required); object (path, required)",
+    "outputs": "200: status, data; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/buckets/{bucket}/objects/{prefix}",
+    "summary": "List Objects",
+    "inputs": "bucket (path, required); prefix (path, required); number (query); page (query)",
+    "outputs": "200: status, data; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Object Storage API Documentaion",
+    "method": "GET",
+    "path": "/api/v1/buckets/{bucket}/upload/{object}",
+    "summary": "Upload Object",
+    "inputs": "bucket (path, required); object (path, required)",
+    "outputs": "200: status, data; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/object-storage.yaml",
+    "servers": [
+      {
+        "url": "https://storage-service.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "POST",
+    "path": "/v1/projects/{name}/resize",
+    "summary": "Change plan",
+    "inputs": "name (path, required); application/json: planID*",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "POST",
+    "path": "/v1/projects",
+    "summary": "Create a app",
+    "inputs": "application/json: name, planID, platform, readOnlyRootFilesystem, network",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 409 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "DELETE",
+    "path": "/v1/projects/{name}",
+    "summary": "Delete a app",
+    "inputs": "name (path, required)",
+    "outputs": "200 (schema unspecified); 204 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "GET",
+    "path": "/v1/projects/{name}/applets",
+    "summary": "Get applets of app",
+    "inputs": "name (path, required)",
+    "outputs": "200: applets; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "GET",
+    "path": "/v1/projects/{name}",
+    "summary": "Get details of a project",
+    "inputs": "name (path, required)",
+    "outputs": "200: project; 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "GET",
+    "path": "/v1/projects",
+    "summary": "Get details of all projects",
+    "inputs": "No inputs specified",
+    "outputs": "200: projects; 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "GET",
+    "path": "/v1/projects/{name}/events",
+    "summary": "Get events of the app",
+    "inputs": "name (path, required); search (query); start (query); end (query)",
+    "outputs": "200: data; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "GET",
+    "path": "/v1/projects/{name}/logs",
+    "summary": "Get logs of app",
+    "inputs": "name (path, required); since (query, required)",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "GET",
+    "path": "/v1/projects/{name}/releases",
+    "summary": "Get releases of app",
+    "inputs": "name (path, required); page (query, required); count (query, required)",
+    "outputs": "200: total, currentRelease, readyReleasesCount, releases, platform; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "POST",
+    "path": "/v1/projects/{name}/actions/restart",
+    "summary": "To restart a app",
+    "inputs": "name (path, required)",
+    "outputs": "200 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "POST",
+    "path": "/v1/projects/{name}/actions/scale",
+    "summary": "Turn on or off a app",
+    "inputs": "name (path, required); application/json: scale*",
+    "outputs": "200 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "POST",
+    "path": "/v2/projects/{name}/releases",
+    "summary": "Deploy releases",
+    "inputs": "name (path, required); application/json: sourceID, port, type",
+    "outputs": "200: releaseID; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "POST",
+    "path": "/v2/projects/{name}/sources",
+    "summary": "Deploy sources code",
+    "inputs": "name (path, required); multipart/form-data: file*",
+    "outputs": "200: sourceID; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "POST",
+    "path": "/v1/projects/{name}/disks",
+    "summary": "Create a disk",
+    "inputs": "name (path, required); application/json: name*, size*",
+    "outputs": "201 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "POST",
+    "path": "/v1/projects/{id}/disks/{name}/backups",
+    "summary": "Create backup disk",
+    "inputs": "id (path, required); name (path, required)",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "POST",
+    "path": "/v1/projects/{name}/disks/{dname}/ftp",
+    "summary": "Create ftp",
+    "inputs": "name (path, required); dname (path, required); application/json: username*, readOnly*",
+    "outputs": "200: username, password, host; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "DELETE",
+    "path": "/v1/projects/{id}/disks/{name}",
+    "summary": "Delete a disk",
+    "inputs": "id (path, required); name (path, required)",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "DELETE",
+    "path": "/v1/ftp/{fname}",
+    "summary": "Delete a ftp",
+    "inputs": "fname (path, required)",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "POST",
+    "path": "/v1/projects/{id}/disks/{dname}/backups/{bname}/download",
+    "summary": "Download backup disk",
+    "inputs": "id (path, required); dname (path, required); bname (path, required)",
+    "outputs": "200: link; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "GET",
+    "path": "/v1/projects/{id}/disks/{name}/backups",
+    "summary": "Get backups disk",
+    "inputs": "id (path, required); name (path, required)",
+    "outputs": "200: backups; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "GET",
+    "path": "/v1/projects/{id}/disks",
+    "summary": "Get disks",
+    "inputs": "id (path, required)",
+    "outputs": "200: disks, mounts; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "GET",
+    "path": "/v1/projects/{name}/disks/{dname}/ftp",
+    "summary": "Get ftps",
+    "inputs": "name (path, required); dname (path, required)",
+    "outputs": "200: accesses, host; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "POST",
+    "path": "/v1/projects/{name}/disks/{dname}/resize",
+    "summary": "Resize disk",
+    "inputs": "name (path, required); dname (path, required); application/json: size*",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "GET",
+    "path": "/v1/domains/{id}/check",
+    "summary": "Check a domain",
+    "inputs": "id (path, required)",
+    "outputs": "200: domain; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "POST",
+    "path": "/v1/domains",
+    "summary": "Create a domain",
+    "inputs": "application/json: name*, project*, type*",
+    "outputs": "201: domain; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "DELETE",
+    "path": "/v1/domains/{id}",
+    "summary": "Delete a domain",
+    "inputs": "id (path, required)",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "POST",
+    "path": "/v1/domains/{id}/ssl/disable",
+    "summary": "Disable ssl",
+    "inputs": "id (path, required)",
+    "outputs": "204 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "POST",
+    "path": "/v1/domains/provision-ssl-certs",
+    "summary": "Enable ssl",
+    "inputs": "application/json: domain*",
+    "outputs": "200: code; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "GET",
+    "path": "/v1/domains",
+    "summary": "Get all domains",
+    "inputs": "project (query, required)",
+    "outputs": "200: domains; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "POST",
+    "path": "/v1/domains/{id}/set-redirect",
+    "summary": "Redirect a domain",
+    "inputs": "id (path, required); application/json: redirectStatus*, redirectTo*",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "POST",
+    "path": "/v1/domains/set-project",
+    "summary": "Set a domain for project",
+    "inputs": "application/json: domainID*, projectID*",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "GET",
+    "path": "/v1/projects/{name}/metrics/cpu",
+    "summary": "Get cpu reports of app",
+    "inputs": "name (path, required); since (query, required)",
+    "outputs": "200: end, result; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "GET",
+    "path": "/v1/projects/{name}/metrics/memory",
+    "summary": "Get memory reports of app",
+    "inputs": "name (path, required); since (query, required)",
+    "outputs": "200: end, result; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "GET",
+    "path": "/v1/projects/{name}/metrics/network-receive",
+    "summary": "Get network-receive reports of app",
+    "inputs": "name (path, required); since (query, required)",
+    "outputs": "200: end, result; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "GET",
+    "path": "/v1/projects/{name}/metrics/network-transmit",
+    "summary": "Get network-transmit reports of app",
+    "inputs": "name (path, required); since (query, required)",
+    "outputs": "200: end, result; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "GET",
+    "path": "/v1/projects/{name}/metrics/summary",
+    "summary": "Get summary reports of app",
+    "inputs": "name (path, required)",
+    "outputs": "200: cpuUsage, memoryUsage, disksUsage; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "POST",
+    "path": "/v1/projects/{id}/default-subdomain/{status}",
+    "summary": "Default subdomain",
+    "inputs": "id (path, required); status (path, required)",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "POST",
+    "path": "/v1/projects/{id}/fixed-ip/{status}",
+    "summary": "IP static",
+    "inputs": "id (path, required); status (path, required)",
+    "outputs": "200: IP; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "POST",
+    "path": "/v1/projects/{id}/read-only/{status}",
+    "summary": "Read only",
+    "inputs": "id (path, required); status (path, required)",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "POST",
+    "path": "/v1/projects/update-envs",
+    "summary": "Update envs",
+    "inputs": "application/json: project, variables",
+    "outputs": "200: message; 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "PaaS",
+    "method": "POST",
+    "path": "/v1/projects/{id}/zero-downtime/{status}",
+    "summary": "Zero downtime",
+    "inputs": "id (path, required); status (path, required)",
+    "outputs": "200 (schema unspecified); 400 (schema unspecified); 401 (schema unspecified); 404 (schema unspecified); 409 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/paas.yaml",
+    "servers": [
+      {
+        "url": "https://api.liara.ir"
+      }
+    ]
+  },
+  {
+    "service": "Liara Database Inspector API Documentaion",
+    "method": "GET",
+    "path": "/v1/databases/{databaseID}/roles",
+    "summary": "Get All Roles in Database",
+    "inputs": "databaseID (path, required)",
+    "outputs": "200: data; 400: error; 401: error; 404: error; 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/database-inspector.yaml",
+    "servers": [
+      {
+        "url": "https://{database-inspector-url}",
+        "variables": {
+          "databse-nspector-url": {
+            "default": "Example",
+            "description": "This value is assigned by the service provider."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "service": "Liara Database Inspector API Documentaion",
+    "method": "POST",
+    "path": "/v1/databases/{databaseID}/roles",
+    "summary": "Create Role in database",
+    "inputs": "databaseID (path, required); application/json: rolename, password, connectionLimit, validUntil, privileges",
+    "outputs": "201: message; 400: error; 401: error; 404: error; 422 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/database-inspector.yaml",
+    "servers": [
+      {
+        "url": "https://{database-inspector-url}",
+        "variables": {
+          "databse-nspector-url": {
+            "default": "Example",
+            "description": "This value is assigned by the service provider."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "service": "Liara Database Inspector API Documentaion",
+    "method": "PUT",
+    "path": "/v1/databases/{databaseID}/roles/{roleName}",
+    "summary": "Update Role",
+    "inputs": "databaseID (path, required); roleName (path, required); application/json: password, connectionLimit, validUntil, privileges",
+    "outputs": "201: message; 400: error; 401: error; 404: error; 422 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/database-inspector.yaml",
+    "servers": [
+      {
+        "url": "https://{database-inspector-url}",
+        "variables": {
+          "databse-nspector-url": {
+            "default": "Example",
+            "description": "This value is assigned by the service provider."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "service": "Liara Database Inspector API Documentaion",
+    "method": "DELETE",
+    "path": "/v1/databases/{databaseID}/roles/{roleName}",
+    "summary": "Delete Role",
+    "inputs": "databaseID (path, required); roleName (path, required)",
+    "outputs": "201: message; 400: error; 401: error; 404: error; 422 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/database-inspector.yaml",
+    "servers": [
+      {
+        "url": "https://{database-inspector-url}",
+        "variables": {
+          "databse-nspector-url": {
+            "default": "Example",
+            "description": "This value is assigned by the service provider."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "service": "Liara Database Inspector API Documentaion",
+    "method": "GET",
+    "path": "/v1/databases/{databaseID}/datasets",
+    "summary": "get all datasets in database (for example tables in SQL databases)",
+    "inputs": "databaseID (path, required)",
+    "outputs": "201: data; 400: error; 401: error; 404: error; 422 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/database-inspector.yaml",
+    "servers": [
+      {
+        "url": "https://{database-inspector-url}",
+        "variables": {
+          "databse-nspector-url": {
+            "default": "Example",
+            "description": "This value is assigned by the service provider."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "service": "Liara Database Inspector API Documentaion",
+    "method": "GET",
+    "path": "/v1/databases/{databaseID}/datasets/{datasetName}",
+    "summary": "get dataset in database using its name",
+    "inputs": "databaseID (path, required); datasetName (path, required); page (query); count (query)",
+    "outputs": "201: data, schema, count; 400: error; 401: error; 404: error; 422 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/database-inspector.yaml",
+    "servers": [
+      {
+        "url": "https://{database-inspector-url}",
+        "variables": {
+          "databse-nspector-url": {
+            "default": "Example",
+            "description": "This value is assigned by the service provider."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "service": "Liara Database Inspector API Documentaion",
+    "method": "POST",
+    "path": "/v1/databases/{databaseID}/queries",
+    "summary": "Execute custom query",
+    "inputs": "databaseID (path, required); application/json: query",
+    "outputs": "201: data, schema, count; 400: error; 401: error; 404: error; 422 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/database-inspector.yaml",
+    "servers": [
+      {
+        "url": "https://{database-inspector-url}",
+        "variables": {
+          "databse-nspector-url": {
+            "default": "Example",
+            "description": "This value is assigned by the service provider."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "service": "Liara Database Inspector API Documentaion",
+    "method": "POST",
+    "path": "/v1/databases/{databaseID}/datasets/{datasetName}/filter",
+    "summary": "Filter dataset data",
+    "inputs": "databaseID (path, required); datasetName (path, required); page (query); count (query); application/json: filter",
+    "outputs": "201: data, schema, count; 400: error; 401: error; 404: error; 422 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/database-inspector.yaml",
+    "servers": [
+      {
+        "url": "https://{database-inspector-url}",
+        "variables": {
+          "databse-nspector-url": {
+            "default": "Example",
+            "description": "This value is assigned by the service provider."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "service": "Liara Database Inspector API Documentaion",
+    "method": "POST",
+    "path": "/v1/databases/{databaseID}/datasets/{datasetName}/data",
+    "summary": "Create data in dataset",
+    "inputs": "databaseID (path, required); datasetName (path, required)",
+    "outputs": "201: message; 400: error; 401: error; 404: error; 422 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/database-inspector.yaml",
+    "servers": [
+      {
+        "url": "https://{database-inspector-url}",
+        "variables": {
+          "databse-nspector-url": {
+            "default": "Example",
+            "description": "This value is assigned by the service provider."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "service": "Liara Database Inspector API Documentaion",
+    "method": "PUT",
+    "path": "/v1/databases/{databaseID}/datasets/{datasetName}/data",
+    "summary": "Update data in dataset",
+    "inputs": "databaseID (path, required); datasetName (path, required)",
+    "outputs": "201: message; 400: error; 401: error; 404: error; 422 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/database-inspector.yaml",
+    "servers": [
+      {
+        "url": "https://{database-inspector-url}",
+        "variables": {
+          "databse-nspector-url": {
+            "default": "Example",
+            "description": "This value is assigned by the service provider."
+          }
+        }
+      }
+    ]
+  },
+  {
+    "service": "Liara Database Inspector API Documentaion",
+    "method": "DELETE",
+    "path": "/v1/databases/{databaseID}/datasets/{datasetName}/data",
+    "summary": "Delete data in dataset",
+    "inputs": "databaseID (path, required); datasetName (path, required)",
+    "outputs": "201: message; 400: error; 401: error; 404: error; 422 (schema unspecified); 409 (schema unspecified); 500 (schema unspecified)",
+    "authentication": [
+      {
+        "jwt": []
+      },
+      {
+        "bearerAuth": []
+      }
+    ],
+    "source": "https://developers.liara.ir/spec/database-inspector.yaml",
+    "servers": [
+      {
+        "url": "https://{database-inspector-url}",
+        "variables": {
+          "databse-nspector-url": {
+            "default": "Example",
+            "description": "This value is assigned by the service provider."
+          }
+        }
+      }
+    ]
+  }
+]

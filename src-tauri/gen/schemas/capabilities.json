@@ -1,0 +1,1 @@
+{"main":{"identifier":"main","description":"Desktop window: folder selection and safe external links","local":true,"windows":["main"],"permissions":["core:default","dialog:allow-open","opener:allow-open-url"]}}

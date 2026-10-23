@@ -1,0 +1,10 @@
+node_modules/
+dist/
+src-tauri/target/
+.env
+.env.*
+!.env.example
+*.log
+docs/liara-snapshot/
+playwright-report/
+test-results/

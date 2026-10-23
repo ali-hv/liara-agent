@@ -1,0 +1,7 @@
+{
+ "$schema":"https://schema.tauri.app/config/2",
+ "productName":"Liara Launch","version":"0.1.0","identifier":"ir.liara.launch.desktop",
+ "build":{"beforeDevCommand":"npm run dev","devUrl":"http://localhost:1420","beforeBuildCommand":"npm run build","frontendDist":"../dist"},
+ "app":{"windows":[{"title":"Liara Launch","width":1440,"height":940,"minWidth":1000,"minHeight":700,"center":true}],"security":{"csp":"default-src 'self'; connect-src ipc: http://ipc.localhost; img-src 'self' asset: http://asset.localhost data:; style-src 'self' 'unsafe-inline'; font-src 'self'; media-src 'self' asset: http://asset.localhost; script-src 'self'"}},
+ "bundle":{"active":false,"targets":["deb"],"icon":[]}
+}
